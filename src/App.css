@@ -1,0 +1,38 @@
+.App {
+  text-align: center;
+}
+
+.Title {
+  text-align: center;
+}
+
+.Form {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  width: 350px;
+  /* border: 1px solid grey; */
+}
+
+.Input {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding: 5px;
+  width: 300px;
+  height: 35px;
+  border-radius: 3px;
+}
+
+.Button {
+  margin-right: 10px;
+  border-radius: 4px;
+  padding: 4px;
+  background-color: rgb(198, 227, 253);
+  cursor: pointer;
+}
+
+.Button:hover,
+.Button:focus {
+  background-color: rgb(241, 209, 229);
+}
