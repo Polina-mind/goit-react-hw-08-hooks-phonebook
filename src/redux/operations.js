@@ -21,7 +21,7 @@ const fetchContacts = () => dispatch => {
 };
 
 const addContact = (name, number) => dispatch => {
-  const contact = { ...name, ...number };
+  const contact = { name, number };
 
   dispatch(addContactRequest());
 
