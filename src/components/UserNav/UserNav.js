@@ -1,10 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { getUserName } from '../../redux/auth/auth-selectors';
 import { logOut } from '../../redux/auth/auth-operations';
 import './UserNav.css';
 
-const UserNav = ({ name, onLogout }) => {
+function UserNav() {
+  const name = useSelector(getUserName);
+  const dispatch = useDispatch();
+
+  const onLogout = useCallback(() => dispatch(logOut()), [dispatch]);
+
   return (
     <ul className="AuthLinks">
       <li>
@@ -17,14 +22,6 @@ const UserNav = ({ name, onLogout }) => {
       </li>
     </ul>
   );
-};
+}
 
-const mapStateToProps = state => ({
-  name: getUserName(state),
-});
-
-const mapDispatchToProps = {
-  onLogout: logOut,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserNav);
+export default UserNav;

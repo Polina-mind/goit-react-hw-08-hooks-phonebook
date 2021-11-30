@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Navigation from '../Navigation';
 import AuthNav from '../AuthNav';
 import UserNav from '../UserNav';
@@ -7,16 +7,16 @@ import { getIsAuthenticated } from '../../redux/auth/auth-selectors';
 
 import './AppBar.css';
 
-const AppBar = ({ isAuthenticated }) => (
-  <header>
-    <Navigation />
+function AppBar() {
+  const isAuthenticated = useSelector(getIsAuthenticated);
 
-    {isAuthenticated ? <UserNav /> : <AuthNav />}
-  </header>
-);
+  return (
+    <header>
+      <Navigation />
 
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
+      {isAuthenticated ? <UserNav /> : <AuthNav />}
+    </header>
+  );
+}
 
-export default connect(mapStateToProps)(AppBar);
+export default AppBar;
