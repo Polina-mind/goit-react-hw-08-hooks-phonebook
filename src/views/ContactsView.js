@@ -1,43 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Form from '../components/Form';
 import Contacts from '../components/Contacts';
 import Filter from '../components/Filter';
 import { fetchContacts } from '../redux/operations';
 import { getLoading } from '../redux/selectors';
 
-class ContactsView extends Component {
-  componentDidMount() {
-    this.props.fetchContacts();
-  }
+function ContactsView() {
+  const dispatch = useDispatch();
+  const isLoadingContacts = useSelector(getLoading);
 
-  render() {
-    return (
-      <>
-        <h2 className="Title">Добавить контакт</h2>
-        <Form></Form>
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-        <h2 className="Title">Список </h2>
-        <Filter></Filter>
+  return (
+    <>
+      <h2 className="Title">Добавить контакт</h2>
+      <Form></Form>
 
-        {this.props.isLoadingContacts && <h1>Loading...</h1>}
-        <Contacts></Contacts>
-      </>
-    );
-  }
+      <h2 className="Title">Список </h2>
+      <Filter></Filter>
+
+      {isLoadingContacts && <h1>Loading...</h1>}
+      <Contacts></Contacts>
+    </>
+  );
 }
 
-// const mapStateToProps = ({ contacts: { loading } }) => ({
-//   isLoadingContacts: loading,
-// });
-
-//с использованием селектора
-const mapStateToProps = state => ({
-  isLoadingContacts: getLoading(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchContacts: () => dispatch(fetchContacts()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsView);
+export default ContactsView;

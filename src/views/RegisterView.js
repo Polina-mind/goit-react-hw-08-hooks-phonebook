@@ -1,90 +1,84 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-// import Button from '@mui/material/Button';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { register } from '../redux/auth/auth-operations';
 
-class RegisterView extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
+function RegisterView() {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleChangeName = event => {
+    setName(event.target.value);
   };
 
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const handleChangeEmail = event => {
+    setEmail(event.target.value);
   };
 
-  handleSubmit = event => {
+  const handleChangePassword = event => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = event => {
     event.preventDefault();
 
-    this.props.onSubmit(this.state);
-    this.setState({ name: '', email: '', password: '' });
+    dispatch(register({ name, email, password }));
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
-  render() {
-    const { name, email, password } = this.state;
+  return (
+    <>
+      <h1 className="Title">Страница регистрации</h1>
 
-    return (
-      <>
-        <h1 className="Title">Страница регистрации</h1>
+      <form type="submit" onSubmit={handleSubmit} className="Form">
+        <label className="Label">
+          Имя
+          <input
+            className="Input"
+            value={name}
+            onChange={handleChangeName}
+            type="text"
+            name="name"
+            placeholder="Polina"
+            required
+          />
+        </label>
 
-        <form type="submit" onSubmit={this.handleSubmit} className="Form">
-          <label className="Label">
-            Имя
-            <input
-              className="Input"
-              value={name}
-              onChange={this.handleChange}
-              type="text"
-              name="name"
-              placeholder="Polina"
-              required
-            />
-          </label>
+        <label className="Label">
+          Почта
+          <input
+            className="Input"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChangeEmail}
+            placeholder="Name@mail.com"
+            required
+          />
+        </label>
 
-          <label className="Label">
-            Почта
-            <input
-              className="Input"
-              type="email"
-              name="email"
-              value={email}
-              onChange={this.handleChange}
-              placeholder="Name@mail.com"
-              required
-            />
-          </label>
+        <label className="Label">
+          Пароль
+          <input
+            className="Input"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChangePassword}
+            autoComplete="off"
+            required
+          />
+        </label>
 
-          <label className="Label">
-            Пароль
-            <input
-              className="Input"
-              type="password"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-              autoComplete="off"
-              required
-            />
-          </label>
-
-          <button type="submit" className="Button">
-            Зарегистрироваться
-          </button>
-        </form>
-      </>
-    );
-  }
+        <button type="submit" className="Button">
+          Зарегистрироваться
+        </button>
+      </form>
+    </>
+  );
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   onSubmit: data => dispatch(register(data)),
-// });
-
-//сокращенный синтаксис
-const mapDispatchToProps = {
-  onSubmit: register,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterView);
+export default RegisterView;
